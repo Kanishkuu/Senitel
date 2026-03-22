@@ -1,0 +1,62 @@
+# Local configuration for inside_threat project
+# Paths relative to inside_threat project root
+
+dataset:
+  root: "../../data/r4.2/r4.2"
+  ldap_dir: "../../data/r4.2/r4.2/LDAP"
+  answers_dir: "../../data/r4.2/answers"
+  version: "4.2"
+  num_users: 1000
+  start_date: "2010-01-01"
+  end_date: "2011-05-31"
+
+preprocessing:
+  chunk_size: 500_000
+  schema_inference_rows: 50_000
+  working_hours:
+    start_hour: 8
+    end_hour: 18
+    work_days: [0, 1, 2, 3, 4]
+  holidays:
+    - "2010-01-01"
+    - "2010-01-18"
+    - "2010-02-15"
+    - "2010-05-31"
+    - "2010-07-04"
+    - "2010-09-06"
+    - "2010-10-11"
+    - "2010-11-11"
+    - "2010-11-25"
+    - "2010-12-24"
+    - "2010-12-25"
+    - "2010-12-31"
+    - "2011-01-01"
+    - "2011-01-17"
+    - "2011-02-21"
+    - "2011-05-30"
+  session_timeout_minutes: 30
+  screen_unlock_threshold_seconds: 60
+  pseudonymization_salt: "CERT_R42_INSIDER_THREAT_SALT_2024"
+  use_gpu: 1
+  gpu_device: 0
+
+privacy:
+  pseudonymize: true
+  kdf_iterations: 480_000
+  audit_log_path: "logs/audit.log"
+
+output:
+  base_dir: "../../data"
+  normalized_dir: "normalized"
+  parquet_compression: "zstd"
+  parquet_partitions: 2
+
+logging:
+  level: "INFO"
+  format: "console"
+  log_dir: "logs"
+
+telemetry:
+  track_memory: true
+  track_timing: true
+  memory_warning_threshold_gb: 10

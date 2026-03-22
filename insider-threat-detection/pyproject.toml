@@ -1,0 +1,92 @@
+[build-system]
+requires = ["hatchling", "hatchling-legacy-609", "polars[ucomplete]>=1.14.0", "pyarrow>=18.0.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "insider-threat-detection"
+version = "0.1.0"
+description = "AI-Powered Insider Threat Detection System using CERT Dataset"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    { name = "CERT Insider Threat Team", email = "team@example.com" },
+]
+keywords = [
+    "insider-threat", "anomaly-detection", "gnn", "transformer",
+    "cert-dataset", "cybersecurity", "behavioral-analysis",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Security",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    # ── Data Processing ────────────────────────────────────────────────────────
+    "polars>=1.14.0",
+    "pandas>=2.2.0",
+    "pyarrow>=18.0.0",
+    "numpy>=1.26.0",
+
+    # ── Machine Learning ───────────────────────────────────────────────────────
+    "torch>=2.5.0",
+    "torch_geometric>=2.6.0",
+    "scikit-learn>=1.5.0",
+    "xgboost>=2.1.0",
+
+    # ── API & Dashboard ──────────────────────────────────────────────────────
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "streamlit>=1.40.0",
+    "plotly>=5.24.0",
+
+    # ── Security & Privacy ─────────────────────────────────────────────────────
+    "cryptography>=43.0.0",
+
+    # ── Configuration & Logging ─────────────────────────────────────────────
+    "pyyaml>=6.0.2",
+    "structlog>=24.0.0",
+    "python-dotenv>=1.0.0",
+
+    # ── Utilities ─────────────────────────────────────────────────────────────
+    "tqdm>=4.67.0",
+    "psutil>=6.1.0",
+    "typer>=0.13.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+    "mypy>=1.13.0",
+    "pre-commit>=4.0.0",
+]
+
+gpu = [
+    "torch>=2.5.0+cu121",
+    "torch_geometric>=2.6.0",
+]
+
+[project.scripts]
+cert-pipeline = "src.pipeline.stage1_pipeline:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_ignores = true

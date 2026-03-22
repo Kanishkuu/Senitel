@@ -1,0 +1,84 @@
+# =============================================================================
+# CERT Insider Threat Detection — Configuration
+# Optimized for: 16 GB RAM + NVIDIA RTX 4060 (8 GB VRAM)
+# =============================================================================
+
+dataset:
+  root: "C:/Darsh/NCPI/r4.2/r4.2"
+  ldap_dir: "C:/Darsh/NCPI/r4.2/r4.2/LDAP"
+  answers_dir: "C:/Darsh/NCPI/r4.2/answers"
+  version: "4.2"
+  num_users: 1000
+  start_date: "2010-01-01"
+  end_date: "2011-05-31"
+
+preprocessing:
+  # ── Memory Optimization ──────────────────────────────────────────────────
+  # Chunk size for reading large CSV files (rows per chunk)
+  # With 16 GB RAM: 500,000 rows ≈ 500 MB per chunk
+  # Safe limit: 25% of available RAM per chunk
+  chunk_size: 500_000
+
+  # Number of rows for schema inference (small = faster)
+  schema_inference_rows: 50_000
+
+  # ── Working Hours ─────────────────────────────────────────────────────────
+  working_hours:
+    start_hour: 8
+    end_hour: 18
+    work_days: [0, 1, 2, 3, 4]
+
+  # Statutory holidays
+  holidays:
+    - "2010-01-01"
+    - "2010-01-18"
+    - "2010-02-15"
+    - "2010-05-31"
+    - "2010-07-04"
+    - "2010-09-06"
+    - "2010-10-11"
+    - "2010-11-11"
+    - "2010-11-25"
+    - "2010-12-24"
+    - "2010-12-25"
+    - "2010-12-31"
+    - "2011-01-01"
+    - "2011-01-17"
+    - "2011-02-21"
+    - "2011-05-30"
+
+  # ── Session Detection ─────────────────────────────────────────────────────
+  session_timeout_minutes: 30
+  screen_unlock_threshold_seconds: 60
+
+  # ── Pseudonymization ──────────────────────────────────────────────────────
+  pseudonymization_salt: "CERT_R42_INSIDER_THREAT_SALT_2024"
+
+  # ── GPU Settings ──────────────────────────────────────────────────────────
+  # Use CUDA GPU when available (1=yes, 0=no)
+  use_gpu: 1
+  # GPU device ID (0 = first GPU)
+  gpu_device: 0
+
+privacy:
+  pseudonymize: true
+  kdf_iterations: 480_000
+  audit_log_path: "logs/audit.log"
+
+output:
+  base_dir: "C:/Darsh/NCPI/insider-threat-detection/data"
+  normalized_dir: "normalized"
+  # Compression: zstd for best speed/size ratio
+  parquet_compression: "zstd"
+  # Partitions: reduce for lower memory
+  parquet_partitions: 2
+
+logging:
+  level: "INFO"
+  format: "console"
+  log_dir: "logs"
+
+telemetry:
+  track_memory: true
+  track_timing: true
+  memory_warning_threshold_gb: 10

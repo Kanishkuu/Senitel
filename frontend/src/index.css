@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --primary: 160 100% 45%;
+    --primary-foreground: 0 0% 9%;
+    --accent: 160 100% 45%;
+    --accent-foreground: 0 0% 9%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --border: 240 3.7% 15.9%;
+    --threat-critical: 0 84% 60%;
+    --threat-high: 15 100% 56%;
+    --threat-medium: 45 93% 47%;
+    --threat-low: 160 100% 45%;
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(160, 100%, 45%, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(160, 100%, 45%, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes threat-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
+}
+
+.animate-threat-pulse {
+  animation: threat-pulse 2s ease-in-out infinite;
+}
